@@ -8,6 +8,7 @@
 </head>
 <body>
 
+  <!-- Welcome Screen -->
   <div class="screen active" id="welcomeScreen">
     <div class="card glass">
       <h2>Welcome back to <span class="highlight">Siticone</span></h2>
@@ -24,12 +25,13 @@
     </div>
   </div>
 
+  <!-- Action Screen -->
   <div class="screen" id="actionScreen">
     <div class="card glass">
       <h2>Choose an action</h2>
       <div class="button-group">
-        <button class="btn action-btn">Inject</button>
-        <button class="btn action-btn">Destruct</button>
+        <button class="btn action-btn" id="injectBtn">Inject</button>
+        <button class="btn action-btn" id="destructBtn">Destruct</button>
       </div>
     </div>
   </div>
@@ -39,7 +41,9 @@
     const button = document.getElementById("discordButton");
     const welcomeScreen = document.getElementById("welcomeScreen");
     const actionScreen = document.getElementById("actionScreen");
+    const destructBtn = document.getElementById("destructBtn");
 
+    // Enable button only if input matches 18–19 digit Discord ID
     input.addEventListener("input", () => {
       const isValid = /^[0-9]{18,19}$/.test(input.value.trim());
       button.disabled = !isValid;
@@ -48,6 +52,16 @@
     button.addEventListener("click", () => {
       welcomeScreen.classList.remove("active");
       actionScreen.classList.add("active");
+    });
+
+    destructBtn.addEventListener("click", async () => {
+      try {
+        const res = await fetch("/destruct", { method: "GET" });
+        const text = await res.text();
+        alert(text === "OK" ? "Destruct executed" : `Destruct failed: ${text}`);
+      } catch (e) {
+        alert("Destruct failed: network error");
+      }
     });
   </script>
 </body>
