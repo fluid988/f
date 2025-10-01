@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Siticone Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="screen active" id="welcomeScreen">
+    <div class="card glass">
+      <h2>Welcome back to <span class="highlight">Siticone</span></h2>
+      <p class="subtitle">Modern client built with precision.</p>
+
+      <input 
+        type="text"
+        id="discordInput"
+        placeholder="Enter your Discord ID"
+        pattern="^[0-9]{18,19}$"
+        required
+      />
+      <button class="btn discord-btn" id="discordButton" disabled>Login</button>
+    </div>
+  </div>
+
+  <div class="screen" id="actionScreen">
+    <div class="card glass">
+      <h2>Choose an action</h2>
+      <div class="button-group">
+        <button class="btn action-btn">Inject</button>
+        <button class="btn action-btn">Destruct</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById("discordInput");
+    const button = document.getElementById("discordButton");
+    const welcomeScreen = document.getElementById("welcomeScreen");
+    const actionScreen = document.getElementById("actionScreen");
+
+    input.addEventListener("input", () => {
+      const isValid = /^[0-9]{18,19}$/.test(input.value.trim());
+      button.disabled = !isValid;
+    });
+
+    button.addEventListener("click", () => {
+      welcomeScreen.classList.remove("active");
+      actionScreen.classList.add("active");
+    });
+  </script>
+</body>
+</html>
